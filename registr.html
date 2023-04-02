@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+
+
+  <form id="registrForm">
+    <img src="img/logo-light.png" alt="">
+    <div class="wrap">
+      <label for="username">
+        <ion-icon name="person-outline"></ion-icon>
+      </label>
+      <input type="text" placeholder="Username" id="username">
+    </div>
+    <div class="wrap">
+      <label for="password">
+        <ion-icon name="bag-remove-outline"></ion-icon>
+      </label>
+      <input type="password" placeholder="password" id="password">
+    </div>
+    <span id="errorMessage"></span>
+    <div class="registrBtnWrap">
+      <button type="submit" id="registrBtn"><a href="" target="_blank">LOGIN</a></button>
+      <p>Forgot password?</p>
+    </div>
+  </form>
+
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="registr.js"></script>
+</body>
+
+</html>

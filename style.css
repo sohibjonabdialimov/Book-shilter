@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lato:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+a{
+  color: inherit;
+}
+body {
+  font-family: "Lato", sans-serif;
+  min-height: 100vh;
+}
+.container {
+  display: flex;
+}
+.btn {
+  padding: 10px 25px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  cursor: pointer;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.142);
+}
+.left {
+  background: linear-gradient(175.93deg, #5f00d8 -10.23%, #b200f1 117.03%);
+  font-family: "Lato", sans-serif;
+  min-height: 100vh;
+  width: 20%;
+  position: fixed;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.left-content {
+  text-align: center;
+  padding-top: 40px;
+}
+.left h2 {
+  font-weight: 400;
+  font-size: 39px;
+  line-height: 47px;
+  color: #ffffff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+}
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+  gap: 22px;
+  cursor: pointer;
+}
+.logout p {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+.right {
+  min-height: 100vh;
+  width: 80%;
+  position: absolute;
+  font-family: "Lato", sans-serif;
+  right: 0;
+  background-color: #fff;
+}
+.right-header {
+  padding: 50px 70px 45px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.right-header h1 {
+  font-weight: 400;
+  font-size: 39px;
+  line-height: 47px;
+  color: #000000;
+}
+.right-header-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.right-header-buttons .dots {
+  color: #9dadb9;
+  background: #eef2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 2px;
+  padding-top: 14.5px;
+  padding-bottom: 14.5px;
+}
+.right-header-buttons .dots span {
+  width: 5px;
+  height: 5px;
+  background-color: #9dadb9;
+}
+.right-header-buttons .add-btn {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+}
+.add-btn {
+  background-color: #10cd45;
+}
+.hero {
+  padding: 0 110px;
+}
+.book__item {
+  display: flex;
+  background-color: #ebebeb;
+  margin-bottom: 37px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+}
+.book__img {
+  padding: 17px 21px 15px 36px;
+  background-color: #d9d7d7;
+  border-radius: 10px 0px 0px 10px;
+}
+.book__img img {
+  width: 144px;
+  object-fit: cover;
+  height: 148px;
+}
+.book__desc {
+  padding: 15px 27px 17px 28px;
+}
+.book__desc h4 {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 24px;
+  color: #0f1111;
+}
+.book__author {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #565959;
+  margin-bottom: 8px;
+}
+.book__author span {
+  color: #335639;
+}
+.book__rating img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+.cost {
+  margin-top: 4px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #171717;
+}
+.cost span {
+  color: #696969;
+}
+.edit__delete-btns {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 33px;
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+}
+.edit-btn {
+  background: #10cd45;
+  color: #fff;
+}
+.delete-btn {
+  background: #ec3736;
+  color: #fff;
+}
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.629);
+  backdrop-filter: blur(1px);
+}
+.modal__content {
+  position: relative;
+  width: 50%;
+  height: 620px;
+  background-color: #fff;
+  padding: 60px 30px 24px 30px;
+  border-radius: 10px;
+  animation: anim .3s ease-in-out;
+}
+@keyframes anim {
+  0%{
+    transform: translateY(-150px);
+    overflow: 0;
+  }100%{
+    transform: translateY(0px);
+    overflow: 1;
+  }
+}
+.modal__content input,
+.modal__content select {
+  width: 100%;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  background: #f3f3f3;
+  border-radius: 5px;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #000000;
+  border: 2px solid #aaa;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.142);
+}
+#modalForm img{
+  width: 20px;
+  height: 25px;
+  position: absolute;
+  top: 15px;
+  right: 30px;
+}
+.modal__edit-btn{
+  background-color: #10CD45;
+  color: #fff;
+  position: relative;
+  bottom: -30px;
+  left: 0px;
+  padding: 20px 50px;
+  font-size: 18px;
+}
+#img__url{
+  width: 60%;
+}
+.modal__content input.error__input,
+.modal__content select.error__input{
+  border: 2px solid red;
+}
+
+
+#small__img{
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+}
+#small__img img{
+  width: 140px;
+  height: 150px;
+  object-fit: cover;
+  position: relative;
+}
+#small__img::after{
+  content: "+";
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#small__img.removePlus::after{
+  content: "";
+}
+.button__text{
+  color: #fff;
+  transition: all 0.3s;
+}
+.button__loading .button__text{
+  visibility: hidden;
+  opacity: 0;
+}
+.button{
+  position: relative;
+}
+.button__loading::after{
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #fff;
+  border-right-color: #fff;
+  border-left-color: #fff;
+  border-radius: 50%;
+  animation:  button 1s infinite;
+}
+@keyframes button{
+  0%{
+    transform: rotate(0turn);
+  }
+  100%{
+    transform: rotate(1turn);
+  }
+}
+/*
+.button__text{
+  color: #fff;
+  transition: all 0.3s;
+}
+.button__loading .button__text{
+  visibility: hidden;
+  opacity: 0;
+}
+.button__loading::after{
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #fff;
+  border-right-color: #fff;
+  border-left-color: #fff;
+  border-radius: 50%;
+  animation:  button 1s infinite;
+}
+@keyframes button{
+  0%{
+    transform: rotate(0turn);
+  }
+  100%{
+    transform: rotate(1turn);
+  }
+}
+
+
+
+*/
+
