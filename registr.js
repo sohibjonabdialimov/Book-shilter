@@ -8,7 +8,7 @@ registrForm.addEventListener('submit', (e) => {
   if (username.value === 'Sohibjon' && password.value === '7777') {
     console.log("salom");
     // registrLink.setAttribute('href', './index.html')
-    location.replace('./index.html');
+    location.replace('./about.html');
   } else {
     username.style.border = '2px solid #f00';
     password.style.border = '2px solid #f00';

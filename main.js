@@ -251,7 +251,7 @@ document.querySelector(`#img__url`).addEventListener('change', postImage);
 
 
 adminPageToLogout.addEventListener('click', () => {
-  location.replace('./registr.html');
+  location.replace('./index.html');
 })
 // fetch('https://book-790d7-default-rtdb.firebaseio.com/');
 
