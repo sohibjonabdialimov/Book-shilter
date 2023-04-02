@@ -5,123 +5,156 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Book List</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="left">
-      <div class="left-content">
-        <img src="img/Logo.svg" alt="">
-        <h2>Admin</h2>
-      </div>
-      <div class="logout">
-        <img src="img/logOut.svg" alt="">
-        <p>Logout</p>
-      </div>
+  <div class="home-header">
+    <div class="home-logo">
+      <img src="img/logo.png" alt="">
     </div>
-    <div class="right">
-      <div class="right-header">
-        <h1>Overview</h1>
-        <!-- <input type="file" id="addFile" multiple > -->
-        <div class="right-header-buttons">
-          <button class="btn dots"><span></span><span></span><span></span></button>
-          <button class="btn add-btn" id="addBtn">Add</button>
-        </div>
-      </div>
-      <div class="hero">
-        <div class="books__list" id="booksList">
-          
-          <!-- <div class="book__item">
-            <div class="book__img">
-              <img src="img/book-img.png" alt="">
-            </div>
-            <div class="book__desc">
-              <h4>The Big Book of Dashboards: </h4>
-              <p class="book__author">by <span>Steve Wexler</span> , Jeffrey Shaffer, et al. | Apr 24, 2017</p>
-              <div class="book__rating">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-              </div>
-              <div class="cost">
-                <p><span>Cost:</span> $24.49</p>
-              </div>
-            </div>
-            <div class="edit__delete-btns">
-              <button class="btn edit-btn">edit</button>
-              <button class="btn delete-btn">delete</button>
-            </div>
+    <div class="home-search">
+      <ion-icon name="search-outline"></ion-icon>
+      <input type="search" id="searchInput" placeholder="Search books">
+    </div>
+    <div class="home-logout">
+      <img src="img/sun.png" alt="">
+      <button><a href="registr.html" target="_blank">Logout</a></button>
+    </div>
+  </div>
+  <div class="home-subheader">
+    <h3>Showing 18 Result(s)</h3>
+
+    <div class="calendar">
+      <ion-icon name="calendar-clear-outline"></ion-icon>
+      <button>Order by newest</button>
+    </div>
+  </div>
+
+  <section class="main">
+    <div class="bookmark">
+      <h2>Bookmarks</h2>
+      <p>If you don't like to read, you haven't found the right book</p>
+      <div class="bookmark_cards">
+        <!-- <div class="bookmark__card">
+          <div class="book-order_title">
+            <h3>Python</h3>
+            <p>David M. Beazley</p>
           </div>
-          <div class="book__item">
-            <div class="book__img">
-              <img src="img/book-img.png" alt="">
-            </div>
-            <div class="book__desc">
-              <h4>The Big Book of Dashboards: Visualizing Your Data Using Real-World Business Scenarios</h4>
-              <p class="book__author">by <span>Steve Wexler</span> , Jeffrey Shaffer, et al. | Apr 24, 2017</p>
-              <div class="book__rating">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-                <img src="img/star.svg" alt="">
-              </div>
-              <div class="cost">
-                <p><span>Cost:</span> $24.49</p>
-              </div>
-            </div>
-            <div class="edit__delete-btns">
-              <button class="btn edit-btn">edit</button>
-              <button class="btn delete-btn">delete</button>
-            </div>
-          </div> -->
-          
-        </div>
+          <div class="book-order_img">
+            <ion-icon name="book-outline"></ion-icon>
+            <img src="img/delete.png" alt="">
+          </div>
+        </div> -->
+        <!-- <div class="bookmark__card">
+          <div class="book-order_title">
+            <h3>Python</h3>
+            <p>David M. Beazley</p>
+          </div>
+          <div class="book-order_img">
+            <ion-icon name="book-outline"></ion-icon>
+            <img src="img/delete.png" alt="">
+          </div>
+        </div> -->
+
       </div>
     </div>
-  </div>
-  
-  
-  <div class="modal" id="modal">
-    <div class="modal__content" id="modalContent">
-      <form id="modalForm">
-        <input type="text" placeholder="Book Title" id="title">
-        <input type="text" placeholder="Author" id="author">
-        <select name="" id="category">
-          <option value="" selected hidden>Category</option>
-          <option value="roman">Roman</option>
-          <option value="comedy">Comedy</option>
-        </select>
-        <input type="number" placeholder="Cost: $" id="cost">
-        <input type="datetime-local" placeholder="Published Date: 2022-12-02" id="published__date">
-        <input type="text" placeholder="Publisher: Nimadur" id="publisher">
-        <input type="number" min="1" max="5" step="1" placeholder="Rate: 7.7" id="rate">
-        <input type="file" placeholder="Image link" id="img__url">
-        <div id="loaderBnts">
-          <!-- <button type="submit" class="btn modal__edit-btn">Save</button> -->
-          <button type="submit" class="btn modal__edit-btn">
-            <span class="button__text">Save</span>
-          </button>
-        </div>
+    <div class="all__cards">
+      <div class="read-all__cards" id="all__cards">
 
-        <!-- <button type="button" class="button button__loading">
-          <span class="button__text">Save Changes</span>
-        </button> -->
-        <img id="close" src="img/close.png" alt="">
-      </form>
-      <div id="small__img">
-        <img alt="">
+        
+
+        <!-- <div class="read-card">
+          <div class="read-book__img">
+            <img src="img/card3.svg" alt="">
+          </div>
+          <div class="read-desc">
+            <h3>Python </h3>
+            <p>David M. Beazley</p>
+            <span>2009</span>
+          </div>
+          <div class="buttons-info">
+            <button class="btn" id="bookmark__btn">Bookmark</button>
+            <button class="btn" id="more__btn">More Info</button>
+          </div>
+          <div class="read-btn">
+            <button class="btn" id="read__btn">Read</button>
+          </div>
+        </div>
+        <div class="read-card">
+          <div class="read-book__img">
+            <img src="img/card1.svg" alt="">
+          </div>
+          <div class="read-desc">
+            <h3>Python </h3>
+            <p>David M. Beazley</p>
+            <span>2009</span>
+          </div>
+          <div class="buttons-info">
+            <button class="btn" id="bookmark__btn">Bookmark</button>
+            <button class="btn" id="more__btn">More Info</button>
+          </div>
+          <div class="read-btn">
+            <button class="btn" id="read__btn">Read</button>
+          </div>
+        </div>
+        <div class="read-card">
+          <div class="read-book__img">
+            <img src="img/card2.svg" alt="">
+          </div>
+          <div class="read-desc">
+            <h3>Python </h3>
+            <p>David M. Beazley</p>
+            <span>2009</span>
+          </div>
+          <div class="buttons-info">
+            <button class="btn" id="bookmark__btn">Bookmark</button>
+            <button class="btn" id="more__btn">More Info</button>
+          </div>
+          <div class="read-btn">
+            <button class="btn" id="read__btn">Read</button>
+          </div>
+        </div>
+        <div class="read-card">
+          <div class="read-book__img">
+            <img src="img/card2.svg" alt="">
+          </div>
+          <div class="read-desc">
+            <h3>Python </h3>
+            <p>David M. Beazley</p>
+            <span>2009</span>
+          </div>
+          <div class="buttons-info">
+            <button class="btn" id="bookmark__btn">Bookmark</button>
+            <button class="btn" id="more__btn">More Info</button>
+          </div>
+          <div class="read-btn">
+            <button class="btn" id="read__btn">Read</button>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="pagination">
+        <span><ion-icon name="chevron-back-outline"></ion-icon></span>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>...</span>
+        <span>9</span>
+        <span>10</span>
+        <span><ion-icon name="chevron-forward-outline"></ion-icon></span>
       </div>
     </div>
-  </div>
+  </section>
+
+  <div class="loading"></div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="main.js"></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>
