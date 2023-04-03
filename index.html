@@ -94,12 +94,21 @@
         <select name="" id="category">
           <option value="" selected hidden>Category</option>
           <option value="roman">Roman</option>
+          <option value="comedy">Drama</option>
           <option value="comedy">Comedy</option>
+          <option value="comedy">Travel</option>
+          <option value="comedy">Advanture</option>
+          <option value="comedy">Poetic</option>
+          <option value="comedy">Religious</option>
+          <option value="comedy">Business</option>
+          <option value="comedy">Scientific</option>
+          <option value="comedy">Story</option>
+          <option value="comedy">Fairy-tale</option>
         </select>
-        <input type="number" placeholder="Cost: $" id="cost">
+        <input type="number" placeholder="Price: so'mda" id="cost">
         <input type="datetime-local" placeholder="Published Date: 2022-12-02" id="published__date">
         <input type="text" placeholder="Publisher: Nimadur" id="publisher">
-        <input type="number" min="1" max="5" step="1" placeholder="Rate: 7.7" id="rate">
+        <input type="number" min="1" max="5" step="1" placeholder="Rate: 1-5" id="rate">
         <input type="file" placeholder="Image link" id="img__url">
         <div id="loaderBnts">
           <!-- <button type="submit" class="btn modal__edit-btn">Save</button> -->
@@ -114,11 +123,15 @@
         <img id="close" src="img/close.png" alt="">
       </form>
       <div id="small__img">
-        <img alt="">
+        <img alt="" id="showImageUrl">
       </div>
     </div>
   </div>
 
+  <div class="loading"></div>
+  <!-- <input type="file" placeholder="Image link" id="addFile"> -->
+  
+  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
 </body>

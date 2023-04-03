@@ -18,6 +18,7 @@ body {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   color: #fff;
+  overflow: hidden;
 }
 
 #registrForm {
@@ -107,4 +108,27 @@ a{
 }
 #errorMessage{
   color: #f00;
+}
+.toast{
+  width: 420px;
+  height: 60px;
+  background-color: #0bf4e8;
+  color: rgb(219, 39, 39);
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 22px;
+  padding: 15px;
+  text-shadow: 1px 1px rgb(223, 136, 136);
+  border-radius: 5px;
+  z-index: 2;
+  box-shadow: 5px 5px 5px #52cce4;
+  letter-spacing: 2px;
+  transform: translateX(150%);
+  opacity: 0;
+  transition: 0.3s all ease-in-out;
+}
+.toast.active{
+  transform: translateX(0);
+  opacity: 1;
 }

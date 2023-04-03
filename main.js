@@ -16,7 +16,8 @@ const deleteBtn = document.getElementById('deleteBtn');
 const edit__delete = document.getElementById('edit__delete');
 const small__img = document.querySelector('#small__img img');
 const smallImg = document.querySelector('#small__img');
-const adminPageToLogout = document.querySelector('.logout')
+const adminPageToLogout = document.querySelector('.logout');
+const loading = document.querySelector('.loading');
 let allBooks = [];
 let globalImageUrl;
 addBtn.addEventListener('click', () => {
@@ -24,8 +25,11 @@ addBtn.addEventListener('click', () => {
 })
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  addNewBook()
+  addNewBook();
 });
+window.addEventListener('DOMContentLoaded', () => {
+  localStorage.removeItem('key');
+})
 
 function addNewBook() {
   let saveObj = {
@@ -38,6 +42,7 @@ function addNewBook() {
     rate: rate.value,
     img__url: globalImageUrl
   }
+
 
 
 
@@ -64,7 +69,6 @@ function addNewBook() {
       }).catch(err => {
         console.log(err.message);
       }).finally(() => {
-
         showBtnLoader(false);
         small__img.setAttribute('src', '');
         smallImg.classList.remove('removePlus');
@@ -78,6 +82,7 @@ function addNewBook() {
 
 
 function getAllBooks() {
+  loading.style.display = 'block';
   fetch('https://book-790d7-default-rtdb.firebaseio.com/books.json').then(res => {
       if (!res.ok) throw new Error('Xatolik bor')
       return res.json();
@@ -93,7 +98,9 @@ function getAllBooks() {
       renderHtmlElements();
     }).catch(err => {
       console.log(err.message);
-    }).finally(() => {})
+    }).finally(() => {
+      loading.style.display = 'none';
+    })
 }
 
 
@@ -107,7 +114,7 @@ function renderHtmlElements() {
       ((d.getMonth() + 1) <= 9 ? ('0' + ((d.getMonth() + 1))) : (d.getMonth() + 1)) +
       "." +
       d.getFullYear() +
-      " " +
+      ", " +
       (d.getHours() <= 9 ? ('0' + d.getHours()) : d.getHours()) +
       ":" +
       (d.getMinutes() <= 9 ? ('0' + d.getMinutes()) : d.getMinutes());
@@ -125,7 +132,8 @@ function renderHtmlElements() {
             </div>
             <div class="book__desc">
               <h4>${item.title} </h4>
-              <p class="book__author">by &nbsp  <span>${item.author}</span> , ${item.publisher}. | ${datestring}</p>
+              <p class="book__author">by &nbsp  <span>${item.author}</span> , ${item.publisher}</p>
+              <p class="book__date">${datestring}</p>
               <div class="book__rating">
               ${starElements}
               </div>
@@ -223,7 +231,6 @@ function postImage(e) {
     globalImageUrl = res.map(item => {
       return `https://api.oqot.uz/api/1.0/file/download/${item}`
     }).join(' ');
-    small__img.setAttribute('src', globalImageUrl);
     smallImg.classList.add('removePlus')
   })
 
@@ -243,11 +250,22 @@ function postImage(e) {
   // })
 }
 
+document.querySelector(`#img__url`).addEventListener('change', showPostImage);
+
+function showPostImage(e){
+  const file = e.target.files[0];
+  small__img.setAttribute('src', URL.createObjectURL(file));
+}
+
 
 
 
 document.querySelector(`#img__url`).addEventListener('change', postImage);
 
+function showPostImage(e){
+  const file = e.target.files[0];
+  document.querySelector('#showImageUrl').setAttribute('src', URL.createObjectURL(file))
+}
 
 
 adminPageToLogout.addEventListener('click', () => {

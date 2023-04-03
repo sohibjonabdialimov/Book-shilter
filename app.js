@@ -4,12 +4,13 @@ const bookmark_cards = document.querySelector('.bookmark_cards');
 const loading = document.querySelector('.loading');
 const pagination = document.querySelector('.pagination');
 const searchInput = document.getElementById('searchInput');
+const allBooksCount = document.getElementById('allBooksCount');
 
 function getAllBooks() {
   loading.style.display = 'block';
   pagination.style.display = 'none';
   fetch('https://book-790d7-default-rtdb.firebaseio.com/books.json').then(res => {
-      if (!res.ok) throw new Error('Xatolik bor')
+      if (!res.ok) throw new Error('Xatolik bor');
       return res.json();
     })
     .then(res => {
@@ -20,6 +21,8 @@ function getAllBooks() {
           ok: +Math.random().toFixed(4),
         }
       })
+
+      allBooksCount.innerHTML = `Showing ${allBooks.length} Result(s)`;
       renderHtmlElements();
     }).catch(err => {
       console.log(err.message);
@@ -91,8 +94,8 @@ function renderDeleteElement(){
   }).join(' ');
 
   bookmark_cards.innerHTML = result;
-
 }
+
 function deleteBookmarkItem(ok){
   bookmarkArr = bookmarkArr.filter(item => {
     return ok !== item.ok;
@@ -100,7 +103,6 @@ function deleteBookmarkItem(ok){
   renderDeleteElement();
 }
 
-searchInput
 
 
 let searchMoviesList = [];
@@ -109,7 +111,7 @@ searchInput.addEventListener("input", (e) => {
       let finded = new RegExp(e.target.value, "gi");
       return finded.test(item.title);
     })
-
+    allBooksCount.innerHTML = `Showing ${searchMoviesList.length} Result(s)`;
     renderSearchHtml();
 });
 function renderSearchHtml() {
