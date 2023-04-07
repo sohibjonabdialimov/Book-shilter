@@ -84,6 +84,9 @@ a{
 .calendar {
   position: relative;
 }
+.calendar button:hover{
+  background: #575e6a;
+}
 .calendar ion-icon {
   position: absolute;
   top: 50%;
@@ -93,6 +96,7 @@ a{
   font-size: 16px;
 }
 .calendar button {
+  transition: .3s all;
   padding: 9px 13px 9px 42px;
   font-weight: 500;
   font-size: 14px;
@@ -101,7 +105,13 @@ a{
   border-radius: 4px;
   color: #ffffff;
   border: none;
+  cursor: pointer;
 }
+.viewer-btns{
+  display: flex;
+  gap: 20px;
+}
+
 
 .bookmark {
   width: 22%;
@@ -257,17 +267,24 @@ a{
 }
 .pagination span {
   background-color: #fff;
-  display: inline-block;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  padding: 12px 15px;
   border: 1px solid #dfe3e8;
   border-radius: 4px;
   font-weight: 700;
   font-size: 14px;
   color: #212b36;
+  cursor: pointer;
+}
+.pagination span:hover{
+  background-color: #212b36;
+  color: #fff;
+}
+.pagination span.page-active{
+  background-color: #212b36;
+  color: #fff;
 }
 .loading{
   position: fixed;

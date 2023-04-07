@@ -370,3 +370,29 @@ body {
     transform: rotate(1turn);
   }
 }
+
+#pagesLists{
+  width: 100%;
+  margin: 50px auto;
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+.page__list{
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.142);
+  border-radius: 3px;
+}
+.page-btn:hover{
+  background-color: green;
+}
+.page-btn{
+  transition: .3s all;
+  padding: 12px 15px;
+  color: #fff;
+  background-color: yellowgreen;
+  border: none;
+  border-radius: 3px;
+}
+.page-btn.page-active{
+  background-color: green;
+}

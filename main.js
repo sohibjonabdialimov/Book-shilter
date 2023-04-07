@@ -18,8 +18,15 @@ const small__img = document.querySelector('#small__img img');
 const smallImg = document.querySelector('#small__img');
 const adminPageToLogout = document.querySelector('.logout');
 const loading = document.querySelector('.loading');
+const pagesLists = document.getElementById('pagesLists');
 let allBooks = [];
 let globalImageUrl;
+
+let url = new URLSearchParams(window.location.search);
+
+let step = 2;
+let page = url.get('page') || 1;
+
 addBtn.addEventListener('click', () => {
   modal.style.display = 'flex';
 })
@@ -32,54 +39,51 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 function addNewBook() {
-  let saveObj = {
-    title: title.value || "djjfjf",
-    author: author.value  || 'ffff',
-    category: category.value,
-    cost: cost.value || '123',
-    published__date: published__date.value,
-    publisher: publisher.value,
-    rate: rate.value,
-    img__url: globalImageUrl
-  }
+  uploadImages(globalImageUrl).then(res => {
 
+    let saveObj = {
+      title: title.value,
+      author: author.value,
+      category: category.value,
+      cost: cost.value,
+      published__date: published__date.value,
+      publisher: publisher.value,
+      rate: rate.value,
+      img__url: res
+    }
 
+    let errorInputs = Object.keys(saveObj).filter(item => !saveObj[item]);
 
-
-  let errorInputs = Object.keys(saveObj).filter(item => !saveObj[item]);
-
-  if (errorInputs.length) {
-    errorInputs.forEach((item) => {
-      document.querySelector(`#${item}`).classList.add('error__input');
-      return;
-    })
-  }
-
-  if (Object.values(saveObj).every((item) => item)) {
-    fetch('https://book-790d7-default-rtdb.firebaseio.com/books.json', {
-        method: 'POST',
-        body: JSON.stringify(saveObj),
-      }).then(res => {
-        if (!res.ok) throw new Error('Xatolik bor')
-        return res.json();
+    if (errorInputs.length) {
+      errorInputs.forEach((item) => {
+        document.querySelector(`#${item}`).classList.add('error__input');
+        return;
       })
-      .then(res => {
-        modalForm.reset();
-        getAllBooks();
-      }).catch(err => {
-        console.log(err.message);
-      }).finally(() => {
-        showBtnLoader(false);
-        small__img.setAttribute('src', '');
-        smallImg.classList.remove('removePlus');
-        modal.style.display = 'none';
-      })
-    showBtnLoader(true);
-  }
+    }
+
+    if (Object.values(saveObj).every((item) => item)) {
+      fetch('https://book-790d7-default-rtdb.firebaseio.com/books.json', {
+          method: 'POST',
+          body: JSON.stringify(saveObj),
+        }).then(res => {
+          if (!res.ok) throw new Error('Xatolik bor')
+          return res.json();
+        })
+        .then(res => {
+          modalForm.reset();
+          getAllBooks();
+        }).catch(err => {
+          console.log(err.message);
+        }).finally(() => {
+          showBtnLoader(false);
+          small__img.setAttribute('src', '');
+          smallImg.classList.remove('removePlus');
+          modal.style.display = 'none';
+        })
+      showBtnLoader(true);
+    }
+  })
 }
-
-
-
 
 function getAllBooks() {
   loading.style.display = 'block';
@@ -95,7 +99,9 @@ function getAllBooks() {
           ok: +Math.random().toFixed(4)
         }
       })
-      renderHtmlElements();
+      renderPagination(allBooks.length);
+      console.log(allBooks);
+      renderHtmlElements(choppedPagination(allBooks));
     }).catch(err => {
       console.log(err.message);
     }).finally(() => {
@@ -104,8 +110,8 @@ function getAllBooks() {
 }
 
 
-function renderHtmlElements() {
-  let result = allBooks.map((item, index) => {
+function renderHtmlElements(books) {
+  let result = books.map((item, index) => {
     let d = new Date(item.published__date);
 
     let datestring = (d.getDate() <= 9 ? ('0' + d.getDate()) :
@@ -178,12 +184,12 @@ function showBtnLoader(show) {
     document.querySelector('#loaderBnts button').classList.remove('button__loading');
   }
 }
+
 booksList.addEventListener('click', (e) => {
-  if(Array.from(e.target.classList).includes('delete-btn')){
+  if (Array.from(e.target.classList).includes('delete-btn')) {
     e.target.classList.add('button__loading')
-  }
-  else if(Array.from(e.target.classList).includes('button__text'))
-  e.target.parentNode.classList.add('button__loading');
+  } else if (Array.from(e.target.classList).includes('button__text'))
+    e.target.parentNode.classList.add('button__loading');
 })
 
 function deleteBook(ok) {
@@ -201,38 +207,38 @@ function deleteBook(ok) {
       getAllBooks();
     }).catch(err => {
       console.log(err.message);
-    }).finally(() => {
-    })
-    
+    }).finally(() => {})
+
 }
 
 function postImage(e) {
-  const formData = new FormData();
+  globalImageUrl = e.target.files;
+  // const formData = new FormData();
   // formData.append('formFile', e.target.files);
   // for(let i of formData.entries()){
   //   console.log(i[0], i[1]);
   // }
-  Promise.all([...e.target.files].map(item => {
+  // Promise.all([...e.target.files].map(item => {
 
-    formData.append('formFile', item);
+  //   formData.append('formFile', item);
 
-    return (
-      // axios.post('https://api.oqot.uz/api/1.0/file/upload', formData)
-      fetch('https://api.oqot.uz/api/1.0/file/upload', {
-        method: 'POST',
-        headers: {
-          // 'Content-Type': 'multipart/form-data',
-        },
-        body: formData,
-      }).then(res => res.json())
-    )
-  })).then(res => {
+  //   return (
+  //     // axios.post('https://api.oqot.uz/api/1.0/file/upload', formData)
+  //     fetch('https://api.oqot.uz/api/1.0/file/upload', {
+  //       method: 'POST',
+  //       headers: {
+  //         // 'Content-Type': 'multipart/form-data',
+  //       },
+  //       body: formData,
+  //     }).then(res => res.json())
+  //   )
+  // })).then(res => {
 
-    globalImageUrl = res.map(item => {
-      return `https://api.oqot.uz/api/1.0/file/download/${item}`
-    }).join(' ');
-    smallImg.classList.add('removePlus')
-  })
+  //   globalImageUrl = res.map(item => {
+  //     return `https://api.oqot.uz/api/1.0/file/download/${item}`
+  //   }).join(' ');
+  //   smallImg.classList.add('removePlus')
+  // })
 
   //   axios.post('https://api.oqot.uz/api/1.0/file/upload', formData).then(res => {
   //   console.log(res);
@@ -250,26 +256,103 @@ function postImage(e) {
   // })
 }
 
+function uploadImages(files) {
+  const formData = new FormData();
+
+  let promise = new Promise((resolve, reject) => {
+    Promise.all([...files].map(item => {
+
+      formData.append('formFile', item);
+
+      return (
+        // axios.post('https://api.oqot.uz/api/1.0/file/upload', formData)
+        fetch('https://api.oqot.uz/api/1.0/file/upload', {
+          method: 'POST',
+          headers: {
+            // 'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
+        }).then(res => res.json())
+      )
+    })).then(res => {
+      resolve(
+        res.map(item => {
+          return `https://api.oqot.uz/api/1.0/file/download/${item}`
+        }).join(' ')
+      )
+      smallImg.classList.add('removePlus');
+    })
+  })
+
+  return promise;
+
+}
+
 document.querySelector(`#img__url`).addEventListener('change', showPostImage);
 
-function showPostImage(e){
+function showPostImage(e) {
   const file = e.target.files[0];
   small__img.setAttribute('src', URL.createObjectURL(file));
 }
 
-
-
-
 document.querySelector(`#img__url`).addEventListener('change', postImage);
-
-function showPostImage(e){
-  const file = e.target.files[0];
-  document.querySelector('#showImageUrl').setAttribute('src', URL.createObjectURL(file))
-}
-
 
 adminPageToLogout.addEventListener('click', () => {
   location.replace('./about.html');
 })
 // fetch('https://book-790d7-default-rtdb.firebaseio.com/');
+// Pagination
+
+
+function renderPagination(length){
+  let result = '';
+  let pageNumber = Math.ceil(length / step);
+  localStorage.setItem('key', JSON.stringify(page));
+  localStorage.setItem('page', JSON.stringify('page-active'));
+
+  for(let i = 0; i < pageNumber; i++){
+    result += `
+      <li class="page__list">
+        <button class="page-btn">${i + 1}</button>
+      </li>
+    `;
+  }
+  pagesLists.innerHTML = result;
+  for(let i = 0; i < Array.from(document.querySelectorAll('.page-btn')).length; i++){
+    document.querySelectorAll('.page-btn').forEach(item => {
+      item.classList.remove('page-active');
+    })
+    Array.from(document.querySelectorAll('.page-btn'))[page - 1]?.classList.add('page-active');
+  }
+ 
+
+  document.querySelectorAll('.page-btn').forEach(item => {
+    item.addEventListener('click', (e) => {
+      page = +e.target.innerHTML;
+      searchElements(page);
+      getAllBooks();
+    })
+  })
+}
+
+
+function choppedPagination(books){
+  let start = page * step - step;
+  let end = start + step;
+  return books.slice(start, end);
+}
+
+
+function searchElements(searchValue){
+  let url = new URL(window.location.href);
+  let query = new URLSearchParams();
+  query.append('page', searchValue);
+  const urlSearchQuery = query.toString();
+  url.search = urlSearchQuery;
+  window.history.pushState(null, "", url.toString());
+
+}
+
+
+
 

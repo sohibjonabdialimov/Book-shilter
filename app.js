@@ -5,6 +5,9 @@ const loading = document.querySelector('.loading');
 const pagination = document.querySelector('.pagination');
 const searchInput = document.getElementById('searchInput');
 const allBooksCount = document.getElementById('allBooksCount');
+let url = new URLSearchParams(window.location.search);
+let step = 6;
+let page = url.get('page') || 1;
 
 function getAllBooks() {
   loading.style.display = 'block';
@@ -21,9 +24,9 @@ function getAllBooks() {
           ok: +Math.random().toFixed(4),
         }
       })
-
-      allBooksCount.innerHTML = `Showing ${allBooks.length} Result(s)`;
-      renderHtmlElements();
+      renderPagination(allBooks.length);
+      allBooksCount.innerHTML = `Showing ${choppedPagination(allBooks).length} Result(s)`;
+      renderHtmlElements(choppedPagination(allBooks));
     }).catch(err => {
       console.log(err.message);
     }).finally(() => {
@@ -33,8 +36,10 @@ function getAllBooks() {
 }
 getAllBooks();
 
-function renderHtmlElements() {
-  let result = allBooks.map((item, index) => {
+
+
+function renderHtmlElements(books) {
+  let result = books.map((item, index) => {
     let d = new Date(item.published__date);
 
     let datestring = d.getFullYear();
@@ -65,7 +70,7 @@ function renderHtmlElements() {
   all__cards.innerHTML = result;
 
 }
-let bookmarkArr = [];
+let bookmarkArr = JSON.parse(localStorage.getItem('bookmarkArr')) || [];
 renderDeleteElement();
 function bookmarkFunc(ok){
   let findedElement = allBooks.find(item => {
@@ -73,11 +78,13 @@ function bookmarkFunc(ok){
   })
   if(!bookmarkArr.includes(findedElement)){
     bookmarkArr.push(findedElement);
+    localStorage.setItem('bookmarkArr', JSON.stringify(bookmarkArr));
   }
   renderDeleteElement();
 }
+
 function renderDeleteElement(){
-  let result = bookmarkArr.map(item => {
+  let result = JSON.parse(localStorage.getItem('bookmarkArr')).map(item => {
     let element = `
     <div class="bookmark__card">
           <div class="book-order_title">
@@ -100,6 +107,7 @@ function deleteBookmarkItem(ok){
   bookmarkArr = bookmarkArr.filter(item => {
     return ok !== item.ok;
   })
+  localStorage.setItem('bookmarkArr', JSON.stringify(bookmarkArr));
   renderDeleteElement();
 }
 
@@ -114,6 +122,7 @@ searchInput.addEventListener("input", (e) => {
     allBooksCount.innerHTML = `Showing ${searchMoviesList.length} Result(s)`;
     renderSearchHtml();
 });
+
 function renderSearchHtml() {
   let result = searchMoviesList.map((item, index) => {
     let d = new Date(item.published__date);
@@ -145,3 +154,68 @@ function renderSearchHtml() {
   all__cards.innerHTML = result;
 
 }
+
+
+// Pagination
+
+
+
+function renderPagination(length){
+  let result = '';
+  let pageNumber = Math.ceil(length / step);
+
+  for(let i = 0; i < pageNumber; i++){
+    result += `
+    <span>${i + 1}</span>
+    `;
+  }
+  document.querySelector('.pagination').innerHTML = result;
+  for(let i = 0; i < Array.from(document.querySelectorAll('.pagination span')).length; i++){
+    document.querySelectorAll('.pagination span').forEach(item => {
+      item.classList.remove('page-active');
+    })
+    Array.from(document.querySelectorAll('.pagination span'))[page - 1].classList.add('page-active');
+  }
+ 
+
+  document.querySelectorAll('.pagination span').forEach(item => {
+    item.addEventListener('click', (e) => {
+      page = +e.target.innerHTML;
+      searchElements(page);
+      getAllBooks();
+    })
+  })
+}
+
+
+function choppedPagination(books){
+  let start = page * step - step;
+  let end = start + step;
+  return books.slice(start, end);
+}
+
+
+function searchElements(searchValue){
+  let url = new URL(window.location.href);
+  let query = new URLSearchParams();
+  query.append('page', searchValue);
+  const urlSearchQuery = query.toString();
+  url.search = urlSearchQuery;
+  window.history.pushState(null, "", url.toString());
+}
+
+document.getElementById('all-book_btn').addEventListener('click', () => {
+  if(document.getElementById('all-book_btn').innerHTML == 'See all books'){
+    document.getElementById('all-book_btn').innerHTML = 'See books with pagination'
+    step = allBooks.length;
+    renderHtmlElements(allBooks);
+    renderPagination(allBooks.length);
+    allBooksCount.innerHTML = `Showing ${choppedPagination(allBooks).length} Result(s)`;
+  }else if(document.getElementById('all-book_btn').innerHTML == 'See books with pagination'){
+      document.getElementById('all-book_btn').innerHTML = 'See all books'
+      step = 6;
+      renderHtmlElements(choppedPagination(allBooks));
+      renderPagination(allBooks.length);
+      allBooksCount.innerHTML = `Showing ${choppedPagination(allBooks).length} Result(s)`;
+  }
+})
