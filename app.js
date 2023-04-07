@@ -120,7 +120,11 @@ searchInput.addEventListener("input", (e) => {
       return finded.test(item.title);
     })
     allBooksCount.innerHTML = `Showing ${searchMoviesList.length} Result(s)`;
-    renderSearchHtml();
+    if(e.target.value === ''){
+      getAllBooks();
+    }else{
+      renderSearchHtml();
+    }
 });
 
 function renderSearchHtml() {
