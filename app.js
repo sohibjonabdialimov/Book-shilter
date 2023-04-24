@@ -84,7 +84,8 @@ function bookmarkFunc(ok){
 }
 
 function renderDeleteElement(){
-  let result = JSON.parse(localStorage.getItem('bookmarkArr')).map(item => {
+  let result = JSON.parse(localStorage.getItem('bookmarkArr')) || [];
+  result = result.map(item => {
     let element = `
     <div class="bookmark__card">
           <div class="book-order_title">
@@ -212,9 +213,9 @@ document.getElementById('all-book_btn').addEventListener('click', () => {
   if(document.getElementById('all-book_btn').innerHTML == 'See all books'){
     document.getElementById('all-book_btn').innerHTML = 'See books with pagination'
     step = allBooks.length;
+    allBooksCount.innerHTML = `Showing ${allBooks.length} Result(s)`;
     renderHtmlElements(allBooks);
     renderPagination(allBooks.length);
-    allBooksCount.innerHTML = `Showing ${choppedPagination(allBooks).length} Result(s)`;
   }else if(document.getElementById('all-book_btn').innerHTML == 'See books with pagination'){
       document.getElementById('all-book_btn').innerHTML = 'See all books'
       step = 6;

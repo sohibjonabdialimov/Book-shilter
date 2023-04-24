@@ -5,26 +5,33 @@
   box-sizing: border-box;
 }
 body {
-  display: flex;
-  width: 100%;
-  height: 99.9vh;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px);
-  background-image: url("./img/libraries.jpg"); 
-  background-color: #e6dfdf08;
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  /* display: flex; */
+  /* width: 100%; */
+  height: 100%;
+  /* position: relative; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* backdrop-filter: blur(5px); */
+  /* background-image: url("./img/libraries.jpg");  */
+  background-color: #302929;
+  /* background-position: center center; */
+  /* background-size: 100% 100%; */
+  /* background-repeat: no-repeat; */
   color: #fff;
   overflow: hidden;
 }
 
+#ok{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 #registrForm {
-  position: relative;
+  position: absolute;
   width: 300px;
-  height: 500px;
+  /* height: 500px; */
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -208,7 +208,7 @@ body {
   background: #ec3736;
   color: #fff;
 }
-.modal {
+.modal, .editModal {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -222,7 +222,7 @@ body {
   background-color: rgba(0, 0, 0, 0.629);
   backdrop-filter: blur(1px);
 }
-.modal__content {
+.modal__content, .edit-modal__content {
   position: relative;
   width: 50%;
   height: 620px;
@@ -241,7 +241,9 @@ body {
   }
 }
 .modal__content input,
-.modal__content select {
+.modal__content select,
+.edit-modal__content input,
+.edit-modal__content select {
   width: 100%;
   padding: 10px 16px;
   margin-bottom: 14px;
@@ -271,21 +273,24 @@ body {
   padding: 20px 50px;
   font-size: 18px;
 }
-#img__url{
+#img__url, #editImg__url{
   width: 60%;
 }
+
 .modal__content input.error__input,
-.modal__content select.error__input{
+.modal__content select.error__input,
+.edit-modal__content input.error__input,
+.edit-modal__content select.error__input{
   border: 2px solid red;
 }
 
 
-#small__img{
+#small__img, #editSmall__img{
   position: absolute;
   bottom: 20px;
   right: 30px;
 }
-#small__img img{
+#small__img img, #editSmall__img img{
   width: 140px;
   height: 150px;
   object-fit: cover;
@@ -395,4 +400,10 @@ body {
 }
 .page-btn.page-active{
   background-color: green;
+}
+
+#editClose{
+  position: absolute;
+  top: 10px;
+  right: 30px;
 }

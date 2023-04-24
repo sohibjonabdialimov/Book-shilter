@@ -122,15 +122,10 @@
         <input type="number" min="1" max="5" step="1" placeholder="Rate: 1-5" id="rate">
         <input type="file" placeholder="Image link" id="img__url">
         <div id="loaderBnts">
-          <!-- <button type="submit" class="btn modal__edit-btn">Save</button> -->
           <button type="submit" class="btn modal__edit-btn">
             <span class="button__text">Save</span>
           </button>
         </div>
-
-        <!-- <button type="button" class="button button__loading">
-          <span class="button__text">Save Changes</span>
-        </button> -->
         <img id="close" src="img/close.png" alt="">
       </form>
       <div id="small__img">
@@ -138,6 +133,84 @@
       </div>
     </div>
   </div>
+
+  <!-- ============== edit modal =============== -->
+  <div class="editModal" id="editModal">
+    <div class="edit-modal__content" id="editModalContent">
+      <form id="editModalForm">
+        <input type="text" placeholder="Book Title" id="editTitle">
+        <input type="text" placeholder="Author" id="editAuthor">
+        <select name="" id="editCategory">
+          <option value="" selected hidden>Category</option>
+          <option value="roman">Roman</option>
+          <option value="comedy">Drama</option>
+          <option value="comedy">Comedy</option>
+          <option value="comedy">Travel</option>
+          <option value="comedy">Advanture</option>
+          <option value="comedy">Poetic</option>
+          <option value="comedy">Religious</option>
+          <option value="comedy">Business</option>
+          <option value="comedy">Scientific</option>
+          <option value="comedy">Story</option>
+          <option val ue="comedy">Fairy-tale</option>
+        </select>
+        <input type="number" placeholder="Price: so'mda" id="editCost">
+        <input type="datetime-local" placeholder="Published Date: 2022-12-02" id="editPublished__date">
+        <input type="text" placeholder="Publisher: Nimadur" id="editPublisher">
+        <input type="number" min="1" max="5" step="1" placeholder="Rate: 1-5" id="editRate">
+        <input type="file" placeholder="Image link" id="editImg__url">
+        <div id="loaderEditBnts">
+          <button type="submit" class="btn modal__edit-btn">
+            <span class="button__text">Edit</span>
+          </button>
+        </div>
+        <img id="editClose" src="img/close.png" alt="">
+      </form>
+      <div id="editSmall__img">
+        <img alt="" id="editShowImageUrl">
+      </div>
+    </div>
+  </div>
+  <!-- ============== edit modal =============== -->
+
+
+
+  <!-- <div class="editModal" id="editModal">
+    <div class="edit__modal__content" id="editModalContent">
+      <form id="editModalForm">
+        <input type="text" placeholder="Book Title" id="editTitle">
+        <input type="text" placeholder="Author" id="editAuthor">
+        <select name="" id="editCategory">
+          <option value="" selected hidden>Category</option>
+          <option value="roman">Roman</option>
+          <option value="comedy">Drama</option>
+          <option value="comedy">Comedy</option>
+          <option value="comedy">Travel</option>
+          <option value="comedy">Advanture</option>
+          <option value="comedy">Poetic</option>
+          <option value="comedy">Religious</option>
+          <option value="comedy">Business</option>
+          <option value="comedy">Scientific</option>
+          <option value="comedy">Story</option>
+          <option val ue="comedy">Fairy-tale</option>
+        </select>
+        <input type="number" placeholder="Price: so'mda" id="editCost">
+        <input type="datetime-local" placeholder="Published Date: 2022-12-02" id="editPublished__date">
+        <input type="text" placeholder="Publisher: Nimadur" id="editPublisher">
+        <input type="number" min="1" max="5" step="1" placeholder="Rate: 1-5" id="editRate">
+        <input type="file" placeholder="Image link" id="editImg__url">
+        <div id="loaderBnts">
+          <button type="submit" class="btn editmodal__edit-btn">
+            <span class="button__text">Save</span>
+          </button>
+        </div>
+        <img id="close" src="img/close.png" alt="">
+      </form>
+      <div id="small__img">
+        <img alt="" id="showImageUrl">
+      </div>
+    </div>
+  </div> -->
 
   <div class="loading"></div>
   <!-- <input type="file" placeholder="Image link" id="addFile"> -->

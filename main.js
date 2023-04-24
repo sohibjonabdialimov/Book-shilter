@@ -1,7 +1,6 @@
 const addBtn = document.getElementById('addBtn');
 const modalForm = document.getElementById('modalForm');
 const modal = document.getElementById('modal');
-const modalContent = document.getElementById('modalContent');
 const close = document.getElementById('close');
 const title = document.getElementById('title');
 const author = document.getElementById('author');
@@ -10,7 +9,6 @@ const cost = document.getElementById('cost');
 const published__date = document.getElementById('published__date');
 const rate = document.getElementById('rate');
 const img__url = document.getElementById('img__url');
-const loaderBnts = document.getElementById('loaderBnts');
 const booksList = document.getElementById('booksList');
 const deleteBtn = document.getElementById('deleteBtn');
 const edit__delete = document.getElementById('edit__delete');
@@ -20,11 +18,29 @@ const adminPageToLogout = document.querySelector('.logout');
 const loading = document.querySelector('.loading');
 const pagesLists = document.getElementById('pagesLists');
 let allBooks = [];
-let globalImageUrl;
+let globalImageUrl = [];
+let editImageUrl = [];
+
+
+// ========== edit ==========
+const editModal = document.getElementById('editModal');
+const editModalForm = document.getElementById('editModalForm');
+const editTitle = document.getElementById('editTitle');
+const editAuthor = document.getElementById('editAuthor');
+const editCategory = document.getElementById('editCategory');
+const editCost = document.getElementById('editCost');
+const editPublished__date = document.getElementById('editPublished__date');
+const editPublisher = document.getElementById('editPublisher');
+const editRate = document.getElementById('editRate');
+const editImg__url = document.getElementById('editImg__url');
+
+let globalEdit;
+
+// ========== edit ==========
 
 let url = new URLSearchParams(window.location.search);
 
-let step = 2;
+let step = 4;
 let page = url.get('page') || 1;
 
 addBtn.addEventListener('click', () => {
@@ -57,7 +73,7 @@ function addNewBook() {
     if (errorInputs.length) {
       errorInputs.forEach((item) => {
         document.querySelector(`#${item}`).classList.add('error__input');
-        return;
+        // return;
       })
     }
 
@@ -77,6 +93,7 @@ function addNewBook() {
         }).finally(() => {
           showBtnLoader(false);
           small__img.setAttribute('src', '');
+          document.getElementById('editShowImageUrl').setAttribute('src', '');
           smallImg.classList.remove('removePlus');
           modal.style.display = 'none';
         })
@@ -96,11 +113,10 @@ function getAllBooks() {
         return {
           ...res[item],
           id: item,
-          ok: +Math.random().toFixed(4)
+          ok: +Math.random().toFixed(15)
         }
       })
       renderPagination(allBooks.length);
-      console.log(allBooks);
       renderHtmlElements(choppedPagination(allBooks));
     }).catch(err => {
       console.log(err.message);
@@ -109,6 +125,20 @@ function getAllBooks() {
     })
 }
 
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+})
+
+editModal.addEventListener('click', (e) => {
+  if (e.target === editModal) {
+    editModal.style.display = 'none';
+  }
+})
+document.getElementById('editClose').addEventListener('click', () => {
+  editModal.style.display = 'none';
+})
 
 function renderHtmlElements(books) {
   let result = books.map((item, index) => {
@@ -148,7 +178,7 @@ function renderHtmlElements(books) {
               </div>
             </div>
             <div class="edit__delete-btns" id="edit__delete">
-              <button class="btn edit-btn">edit</button>
+              <button class="btn edit-btn" onclick='editBookFunc(${item.ok})'>edit</button>
               <button type="button" class="button btn delete-btn" id="deleteBtn" onclick='deleteBook(${item.ok})'>
                 <span class="button__text">delete</span>
               </button>
@@ -161,6 +191,94 @@ function renderHtmlElements(books) {
   booksList.innerHTML = result;
 
 }
+// ===============edit function =============
+function editBookFunc(ok) {
+  editModal.style.display = 'flex';
+  let findedElement = allBooks.find(item => {
+    return item.ok === ok;
+  })
+  let findedElementIndex = allBooks.findIndex(item => {
+    return item.ok === ok;
+  })
+  globalEdit = {
+    id: findedElement.id,
+    index: findedElementIndex
+  }
+
+
+  editTitle.value = findedElement.title;
+  editAuthor.value = findedElement.author;
+  editCategory.value = findedElement.category;
+  editCost.value = findedElement.cost;
+  editPublished__date.value = findedElement.published__date;
+  editPublisher.value = findedElement.publisher;
+  editRate.value = findedElement.rate;
+  // editImg__url.files = globalImageUrl;
+
+}
+// console.log(`#edit${'title'.charAt(0).toUpperCase()}${'title'.slice(1)}`);
+
+editModalForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // editModal.style.display = 'none';
+  editSaveFunc();
+})
+
+function editSaveFunc() {
+  editUploadImages(editImageUrl).then(res => {
+    let editObj = {
+      title: editTitle.value,
+      author: editAuthor.value,
+      category: editCategory.value,
+      cost: editCost.value,
+      published__date: editPublished__date.value,
+      publisher: editPublisher.value,
+      rate: editRate.value,
+      img__url: res
+    }
+
+    let errorInputs = Object.keys(editObj).filter(item => !editObj[item]);
+
+    if (errorInputs.length) {
+      errorInputs.forEach((item) => {
+        document.querySelector(`#edit${item.charAt(0).toUpperCase()}${item.slice(1)}`).classList.add('error__input');
+        return;
+      });
+    };
+    if (Object.values(editObj).every((item) => item)) {
+      fetch(`https://book-790d7-default-rtdb.firebaseio.com/books/${globalEdit.id}.json`, {
+          method: 'PUT',
+          body: JSON.stringify(editObj),
+        }).then(res => {
+          if (!res.ok) throw new Error('Xatolik bor')
+          return res.json();
+        })
+        .then(res => {
+          editModalForm.reset();
+          errorInputs.forEach((item) => {
+            document.querySelector(`#edit${item.charAt(0).toUpperCase()}${item.slice(1)}`).classList.remove('error__input');
+            return;
+          });
+          getAllBooks();
+        }).catch(err => {
+          console.log(err.message);
+        }).finally(() => {
+          showEditBtnLoader(false);
+          small__img.setAttribute('src', '');
+          document.getElementById('editShowImageUrl').setAttribute('src', '');
+          smallImg.classList.remove('removePlus');
+          editModal.style.display = 'none';
+        })
+        showEditBtnLoader(true);
+    }
+  })
+}
+// ===============edit function =============
+
+
+
+
+
 
 getAllBooks();
 Array.from(modalForm).forEach(item => {
@@ -182,6 +300,13 @@ function showBtnLoader(show) {
     document.querySelector('#loaderBnts button').classList.add('button__loading');
   } else {
     document.querySelector('#loaderBnts button').classList.remove('button__loading');
+  }
+}
+function showEditBtnLoader(show) {
+  if (show) {
+    document.querySelector('#loaderEditBnts button').classList.add('button__loading');
+  } else {
+    document.querySelector('#loaderEditBnts button').classList.remove('button__loading');
   }
 }
 
@@ -211,8 +336,14 @@ function deleteBook(ok) {
 
 }
 
+function postEditImage(e) {
+  editImageUrl = e.target.files;
+}
+
 function postImage(e) {
   globalImageUrl = e.target.files;
+  // editImageUrl = e.target.files[0];
+
   // const formData = new FormData();
   // formData.append('formFile', e.target.files);
   // for(let i of formData.entries()){
@@ -283,34 +414,71 @@ function uploadImages(files) {
       smallImg.classList.add('removePlus');
     })
   })
+  return promise;
+}
 
+function editUploadImages(files) {
+  const formData = new FormData();
+
+  let promise = new Promise((resolve, reject) => {
+    Promise.all([...files].map(item => {
+
+      formData.append('formFile', item);
+
+      return (
+        // axios.post('https://api.oqot.uz/api/1.0/file/upload', formData)
+        fetch('https://api.oqot.uz/api/1.0/file/upload', {
+          method: 'POST',
+          headers: {
+            // 'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
+        }).then(res => res.json())
+      )
+    })).then(res => {
+      resolve(
+        res.map(item => {
+          return `https://api.oqot.uz/api/1.0/file/download/${item}`
+        }).join(' ')
+      )
+      smallImg.classList.add('removePlus');
+    })
+  })
   return promise;
 
 }
 
 document.querySelector(`#img__url`).addEventListener('change', showPostImage);
+document.querySelector(`#editImg__url`).addEventListener('change', showEditPostImage);
 
 function showPostImage(e) {
   const file = e.target.files[0];
   small__img.setAttribute('src', URL.createObjectURL(file));
 }
 
+function showEditPostImage(e) {
+  const file = e.target.files[0];
+  document.getElementById('editShowImageUrl').setAttribute('src', URL.createObjectURL(file));
+}
+
 document.querySelector(`#img__url`).addEventListener('change', postImage);
+document.querySelector(`#editImg__url`).addEventListener('change', postEditImage);
 
 adminPageToLogout.addEventListener('click', () => {
   location.replace('./about.html');
 })
 // fetch('https://book-790d7-default-rtdb.firebaseio.com/');
+
+
 // Pagination
 
-
-function renderPagination(length){
+function renderPagination(length) {
   let result = '';
   let pageNumber = Math.ceil(length / step);
   localStorage.setItem('key', JSON.stringify(page));
   localStorage.setItem('page', JSON.stringify('page-active'));
 
-  for(let i = 0; i < pageNumber; i++){
+  for (let i = 0; i < pageNumber; i++) {
     result += `
       <li class="page__list">
         <button class="page-btn">${i + 1}</button>
@@ -318,13 +486,13 @@ function renderPagination(length){
     `;
   }
   pagesLists.innerHTML = result;
-  for(let i = 0; i < Array.from(document.querySelectorAll('.page-btn')).length; i++){
+  for (let i = 0; i < Array.from(document.querySelectorAll('.page-btn')).length; i++) {
     document.querySelectorAll('.page-btn').forEach(item => {
       item.classList.remove('page-active');
     })
-    Array.from(document.querySelectorAll('.page-btn'))[page - 1]?.classList.add('page-active');
+    Array.from(document.querySelectorAll('.page-btn'))[page - 1] ?.classList.add('page-active');
   }
- 
+
 
   document.querySelectorAll('.page-btn').forEach(item => {
     item.addEventListener('click', (e) => {
@@ -336,23 +504,18 @@ function renderPagination(length){
 }
 
 
-function choppedPagination(books){
+function choppedPagination(books) {
   let start = page * step - step;
   let end = start + step;
   return books.slice(start, end);
 }
 
 
-function searchElements(searchValue){
+function searchElements(searchValue) {
   let url = new URL(window.location.href);
   let query = new URLSearchParams();
   query.append('page', searchValue);
   const urlSearchQuery = query.toString();
   url.search = urlSearchQuery;
   window.history.pushState(null, "", url.toString());
-
 }
-
-
-
-

@@ -11,6 +11,7 @@ registrForm.addEventListener('submit', (e) => {
       username: username.value,
       password: password.value
     }
+    console.log(data);
     localStorage.setItem('key', JSON.stringify(data));
     if(JSON.parse(localStorage.getItem('key'))){
       location.replace('./index.html');
@@ -28,7 +29,13 @@ registrForm.addEventListener('submit', (e) => {
       errorFunc('');
     }, 2000);
   }
+
+
 })
+
+if(JSON.parse(localStorage.getItem('key'))){
+  location.replace('./index.html');
+}
 username.addEventListener('input', () => {
   username.style.border = '';
 })

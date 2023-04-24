@@ -15,27 +15,32 @@
   </div>
 
 
-  <form id="registrForm">
-    <img src="img/logo-light.png" alt="">
-    <div class="wrap">
-      <label for="username">
-        <ion-icon name="person-outline"></ion-icon>
-      </label>
-      <input type="text" placeholder="Username" id="username">
-    </div>
-    <div class="wrap">
-      <label for="password">
-        <ion-icon name="bag-remove-outline"></ion-icon>
-      </label>
-      <input type="password" placeholder="password" id="password">
-    </div>
-    <span id="errorMessage"></span>
-    <div class="registrBtnWrap">
-      <button type="submit" id="registrBtn"><a href="" target="_blank">LOGIN</a></button>
-      <p>Forgot password?</p>
-    </div>
-  </form>
+  <div id="ok">
+    <form id="registrForm">
+      <img src="img/logo-light.png" alt="">
+      <div class="wrap">
+        <label for="username">
+          <ion-icon name="person-outline"></ion-icon>
+        </label>
+        <input type="text" placeholder="Username" id="username">
+      </div>
+      <div class="wrap">
+        <label for="password">
+          <ion-icon name="bag-remove-outline"></ion-icon>
+        </label>
+        <input type="password" placeholder="password" id="password">
+      </div>
+      <span id="errorMessage"></span>
+      <div class="registrBtnWrap">
+        <button type="submit" id="registrBtn"><a href="" target="_blank">LOGIN</a></button>
+        <p>Forgot password?</p>
+      </div>
+    </form>
+  </div>
 
+
+  <script src="registr/particles.js"></script>
+  <script src="registr/ok.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="registr.js"></script>
